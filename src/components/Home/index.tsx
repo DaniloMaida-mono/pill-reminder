@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import PlanBox from '../PlanBox';
+
 import SearchInput from '../SearchInput';
 import SectionTitle from '../SectionTitle';
 
@@ -15,7 +16,14 @@ function Home() {
       />
 
       <View style={styles.sectionContainer}>
-        <SectionTitle text="Hello, Danilo" />
+        <SectionTitle
+          text="Hello,"
+          isWithSecondary={true}
+          secondaryText="Danilo"
+        />
+        <View style={styles.planBoxContainer}>
+          <PlanBox total={4} completed={1} />
+        </View>
       </View>
     </View>
   );
@@ -26,6 +34,9 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   sectionContainer: {
+    marginTop: 30,
+  },
+  planBoxContainer: {
     marginTop: 30,
   },
 });

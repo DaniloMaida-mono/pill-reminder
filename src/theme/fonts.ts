@@ -1,24 +1,31 @@
+import {TextStyle} from 'react-native';
+
 export const fontSize = {
   title: 45,
-  titleSecondary: 20,
+  titleSecondary: 22,
   text: 16,
+  smallText: 12,
 };
 
-export const fontWeight = {
-  regular: 'Lato-Regular',
-  italic: 'Lato-Italic',
-  bold: 'Lato-Bold',
+type FontWeight = {
+  [k: string]: TextStyle['fontWeight'];
+};
+export const fontWeight: FontWeight = {
+  regular: 'normal',
+  bold: '700',
+  semiBold: '500',
 };
 
 export const fontStyle = {
   regular: {
     fontFamily: fontWeight.regular,
   },
-  italic: {
-    fontFamily: fontWeight.italic,
-  },
+
   bold: {
-    fontFamily: fontWeight.bold,
+    fontWeight: fontWeight.bold,
+  },
+  semiBold: {
+    fontFamily: fontWeight.semiBold,
   },
 };
 
@@ -31,5 +38,8 @@ export const textStyle = {
   },
   text: {
     fontSize: fontSize.text,
+  },
+  smallText: {
+    fontSize: fontSize.smallText,
   },
 };

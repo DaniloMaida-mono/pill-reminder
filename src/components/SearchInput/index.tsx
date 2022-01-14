@@ -26,8 +26,8 @@ function SearchInput({onChange, value, placeHolder = ''}: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
-    borderRadius: 10,
+    paddingHorizontal: 20,
+    borderRadius: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontSize: fontSize.text,
-    paddingLeft: 10,
+    paddingLeft: 20,
     color: colors.black,
   },
 });
