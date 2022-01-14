@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
       Platform.OS === 'android' && StatusBar.currentHeight
         ? StatusBar.currentHeight + 20
         : 20,
-    paddingBottom: 20,
   },
   sectionContainer: {
     marginTop: 32,

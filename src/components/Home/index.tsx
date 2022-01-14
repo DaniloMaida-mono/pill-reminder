@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
 import PlansList from '../PlansList';
 
@@ -8,8 +8,12 @@ import SectionTitle from '../SectionTitle';
 
 function Home() {
   const [searchValue, setSearchValue] = useState('');
+
+  const handlePress = (id: string | number) => {
+    console.log(id);
+  };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <SearchInput
         value={searchValue}
         placeHolder="Search"
@@ -26,15 +30,17 @@ function Home() {
       </View>
       <View style={styles.sectionContainer}>
         <SectionTitle text="Daily review" subSection={true} />
+        <PlansList onPress={handlePress} />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 0,
+    flex: 1,
     backgroundColor: 'white',
+    marginBottom: 50,
   },
   sectionContainer: {
     marginTop: 30,

@@ -4,7 +4,7 @@ export const fontSize = {
   title: 45,
   titleSecondary: 22,
   text: 16,
-  smallText: 12,
+  smallText: 14,
 };
 
 type FontWeight = {

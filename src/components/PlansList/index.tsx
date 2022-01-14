@@ -1,35 +1,50 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import PlansListItem from '../PlansListItem';
 
-function PlansList() {
+type Props = {
+  onPress: Function;
+};
+function PlansList({onPress}: Props) {
+  const data = [
+    {text: 'Devin', time: '10:00 AM', eatingInfo: 'Before eating', id: 1},
+    {text: 'Dan', time: '10:00 AM', eatingInfo: 'Before eating', id: 2},
+    {text: 'Dominic', time: '10:00 AM', eatingInfo: 'Before eating', id: 3},
+    {text: 'Jackson', time: '10:00 AM', eatingInfo: 'Before eating', id: 4},
+    {text: 'James', time: '10:00 AM', eatingInfo: 'Before eating', id: 5},
+    {text: 'Joel', time: '10:00 AM', eatingInfo: 'Before eating', id: 6},
+    {text: 'John', time: '10:00 AM', eatingInfo: 'Before eating', id: 7},
+    {text: 'Jillian', time: '10:00 AM', eatingInfo: 'Before eating', id: 8},
+    {text: 'Jimmy', time: '10:00 AM', eatingInfo: 'Before eating', id: 9},
+    {text: 'Julie', time: '10:00 AM', eatingInfo: 'Before eating', id: 10},
+  ];
   return (
     <View style={styles.container}>
-      <Text>Ciao</Text>
-      <FlatList
-        data={[
-          {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'},
-        ]}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      />
+      {data.map(item => (
+        <TouchableOpacity onPress={() => onPress(item.id)} style={styles.item}>
+          <PlansListItem
+            text={item.text}
+            time={item.time}
+            eatingInfo={item.eatingInfo}
+            key={item.id}
+          />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   item: {
-    // padding: 10,
-    fontSize: 18,
-    height: 44,
+    paddingBottom: 20,
   },
 });
 
