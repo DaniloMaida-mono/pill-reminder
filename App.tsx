@@ -25,8 +25,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Home />
-      {/* <Navigation /> */}
+      <Navigation />
     </SafeAreaView>
   );
 };
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
       Platform.OS === 'android' && StatusBar.currentHeight
         ? StatusBar.currentHeight + 20
         : 20,
+    paddingBottom: 20,
   },
   sectionContainer: {
     marginTop: 32,

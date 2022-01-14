@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
+import PlansList from '../PlansList';
 
 import SearchInput from '../SearchInput';
 import SectionTitle from '../SectionTitle';
@@ -21,9 +22,10 @@ function Home() {
           isWithSecondary={true}
           secondaryText="Danilo"
         />
-        <View style={styles.planBoxContainer}>
-          <PlanBox total={4} completed={1} />
-        </View>
+        <PlanBox total={4} completed={1} />
+      </View>
+      <View style={styles.sectionContainer}>
+        <SectionTitle text="Daily review" subSection={true} />
       </View>
     </View>
   );
@@ -32,11 +34,9 @@ function Home() {
 const styles = StyleSheet.create({
   container: {
     padding: 0,
+    backgroundColor: 'white',
   },
   sectionContainer: {
-    marginTop: 30,
-  },
-  planBoxContainer: {
     marginTop: 30,
   },
 });

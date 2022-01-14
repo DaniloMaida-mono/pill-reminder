@@ -1,18 +1,20 @@
 import {colors} from '@app/theme/colors';
 import {fontSize, fontStyle, fontWeight, textStyle} from '@app/theme/fonts';
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 type Props = {
   text: string;
   isWithSecondary?: boolean;
   secondaryText?: string;
+  subSection?: boolean;
 };
 
 function SectionTitle({
   text,
   isWithSecondary = false,
   secondaryText = '',
+  subSection = false,
 }: Props) {
   const renderSecondaryText = () => {
     if (isWithSecondary && secondaryText) {
@@ -25,8 +27,13 @@ function SectionTitle({
     }
   };
   return (
-    <View>
-      <Text style={[textStyle.title, fontStyle.bold, {color: colors.black}]}>
+    <View style={styles.container}>
+      <Text
+        style={[
+          !subSection ? textStyle.title : textStyle.titleSecondary,
+          fontStyle.bold,
+          {color: colors.black},
+        ]}>
         {text}
       </Text>
       {renderSecondaryText()}
@@ -34,4 +41,7 @@ function SectionTitle({
   );
 }
 
+const styles = StyleSheet.create({
+  container: {marginBottom: 30},
+});
 export default SectionTitle;
