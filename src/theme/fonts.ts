@@ -1,8 +1,8 @@
 import {TextStyle} from 'react-native';
 
 export const fontSize = {
-  title: 45,
-  titleSecondary: 22,
+  title: 35,
+  titleSecondary: 18,
   text: 16,
   smallText: 14,
 };

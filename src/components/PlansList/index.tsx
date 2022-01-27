@@ -26,12 +26,14 @@ function PlansList({onPress}: Props) {
   return (
     <View style={styles.container}>
       {data.map(item => (
-        <TouchableOpacity onPress={() => onPress(item.id)} style={styles.item}>
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => onPress(item.id)}
+          style={styles.item}>
           <PlansListItem
             text={item.text}
             time={item.time}
             eatingInfo={item.eatingInfo}
-            key={item.id}
           />
         </TouchableOpacity>
       ))}

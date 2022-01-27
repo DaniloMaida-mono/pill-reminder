@@ -8,7 +8,6 @@
  * @format
  */
 
-import Home from '@app/components/Home';
 import Navigation from '@app/navigation';
 import React from 'react';
 import {

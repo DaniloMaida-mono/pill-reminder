@@ -1,3 +1,5 @@
+import Navigation, {RootStackParamList} from '@app/navigation';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
@@ -5,8 +7,9 @@ import PlansList from '../PlansList';
 
 import SearchInput from '../SearchInput';
 import SectionTitle from '../SectionTitle';
-
-function Home() {
+function Home({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'Home'>) {
   const [searchValue, setSearchValue] = useState('');
 
   const handlePress = (id: string | number) => {
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginBottom: 50,
+    marginBottom: 100,
   },
   sectionContainer: {
     marginTop: 30,
