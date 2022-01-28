@@ -19,6 +19,7 @@ type Props = {
   keyboardType?: KeyboardTypeOptions;
   onChangeText?: (text: string) => void;
   onFocus?: () => void;
+  editable?: boolean;
 };
 
 const InputText: React.FC<Props> = props => {

@@ -1,24 +1,39 @@
 import {RootStackParamList} from '@app/navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import BackIcon from '@assets/img/back.svg';
 import {colors} from '@app/theme/colors';
 import SectionTitle from '../SectionTitle';
 import PlanForm from '../PlanForm';
-function Plan({
-  navigation,
-}: NativeStackScreenProps<RootStackParamList, 'Plan'>) {
+import withApplicationState from '@app/withApplicationState';
+import {FormState} from '@app/types/form';
+import {PlansActionTypes} from '@app/types/store';
+import {showMessage} from 'react-native-flash-message';
+
+type Props = {
+  dispatch: ({type}: {type: string; payload?: any}) => void;
+  navigation: NativeStackScreenProps<RootStackParamList, 'Plan'>['navigation'];
+};
+function Plan(props: Props) {
+  const handleSubmit = (data: FormState) => {
+    props.dispatch({type: PlansActionTypes.addPlan, payload: data});
+    props.navigation.navigate('Home');
+    showMessage({
+      message: 'Piano creato correttamente!',
+      type: 'success',
+    });
+  };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
         style={styles.backIconContainer}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => props.navigation.navigate('Home')}>
         <BackIcon fill={colors.darkerGrey} height={30} width={30} />
       </TouchableOpacity>
       <SectionTitle text="Add Plan" />
-      <PlanForm />
-    </View>
+      <PlanForm onSubmit={handleSubmit} />
+    </ScrollView>
   );
 }
 
@@ -35,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Plan;
+export default withApplicationState(Plan);

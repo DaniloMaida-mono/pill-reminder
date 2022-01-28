@@ -27,11 +27,8 @@ const customTabBarStyle: BottomTabNavigationOptions = {
   tabBarShowLabel: false,
   tabBarStyle: {
     backgroundColor: 'white',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
+    marginTop: 20,
     elevation: 0,
-    // flex: 1,
     height: 100,
     paddingBottom: 0,
   },
@@ -70,7 +67,7 @@ const Navigation = () => {
           component={Plan}
           options={{
             tabBarIcon: ({size, color}) => (
-              <Add width={size} height={size} fill={colors.green} />
+              <Add width={50} height={50} fill={colors.green} />
             ),
             headerShown: false,
           }}

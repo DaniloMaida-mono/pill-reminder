@@ -1,5 +1,5 @@
-import Navigation, {RootStackParamList} from '@app/navigation';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {ApplicationState} from '@app/types/store';
+import withApplicationState from '@app/withApplicationState';
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
@@ -7,9 +7,11 @@ import PlansList from '../PlansList';
 
 import SearchInput from '../SearchInput';
 import SectionTitle from '../SectionTitle';
-function Home({
-  navigation,
-}: NativeStackScreenProps<RootStackParamList, 'Home'>) {
+
+type Props = {
+  state: ApplicationState;
+};
+function Home(props: Props) {
   const [searchValue, setSearchValue] = useState('');
 
   const handlePress = (id: string | number) => {
@@ -33,7 +35,7 @@ function Home({
       </View>
       <View style={styles.sectionContainer}>
         <SectionTitle text="Daily review" subSection={true} />
-        <PlansList onPress={handlePress} />
+        <PlansList data={props.state.plans} onPress={handlePress} />
       </View>
     </ScrollView>
   );
@@ -43,11 +45,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginBottom: 100,
   },
   sectionContainer: {
-    marginTop: 30,
+    paddingTop: 30,
   },
 });
 
-export default Home;
+export default withApplicationState(Home);

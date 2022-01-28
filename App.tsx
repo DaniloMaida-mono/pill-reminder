@@ -9,6 +9,7 @@
  */
 
 import Navigation from '@app/navigation';
+import {StateProvider} from '@app/store/provider';
 import React from 'react';
 import {
   Platform,
@@ -17,15 +18,19 @@ import {
   StyleSheet,
   useColorScheme,
 } from 'react-native';
+import FlashMessage from 'react-native-flash-message';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Navigation />
-    </SafeAreaView>
+    <StateProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <Navigation />
+        <FlashMessage position="top" />
+      </SafeAreaView>
+    </StateProvider>
   );
 };
 

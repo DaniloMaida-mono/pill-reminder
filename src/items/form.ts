@@ -5,6 +5,7 @@ export const initialFormState: FormState = {
   qty: undefined,
   days: undefined,
   eatingTime: -1,
+  notification: new Date(),
 };
 
 export const foodItems: FoodItem[] = [

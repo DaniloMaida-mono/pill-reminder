@@ -1,11 +1,5 @@
 import React, {useReducer} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import SectionTitle from '../SectionTitle';
 import InputText from '../TextInput';
 import PillsIcon from '@assets/img/pills.svg';
@@ -13,13 +7,19 @@ import CalendarIcon from '@assets/img/calendar.svg';
 
 import {colors} from '@app/theme/colors';
 import TouchIcon from '../TouchIcon';
-import {ActionTypes} from '@app/types/form';
+import {ActionTypes, FormState} from '@app/types/form';
 import {Icon} from '@app/types/generic';
 import {reducer} from './reducer';
 import {foodItems, initialFormState} from '@app/items/form';
 import {textStyle} from '@app/theme/fonts';
+import TimePicker from '../TimePicker';
+import {amPmFormatter} from '@app/utils/dateFormatter';
 
-function PlanForm() {
+interface Props {
+  onSubmit: (state: FormState) => void;
+}
+
+function PlanForm(props: Props) {
   const icons: Icon = {
     pills: <PillsIcon width={20} height={20} fill={colors.darkerGrey} />,
     calendar: <CalendarIcon width={20} height={20} fill={colors.darkerGrey} />,
@@ -30,16 +30,40 @@ function PlanForm() {
     dispatch({type: ActionTypes.setPillsEatingTime, payload: value});
   };
 
-  const handleChangeInput = (action: ActionTypes, value: number | string) => {
+  const handleChangeInput = (
+    action: ActionTypes,
+    value: number | string | Date
+  ) => {
     dispatch({type: action, payload: value});
   };
 
+  const validateForm = () =>
+    new Promise<void>((resolve, reject) => {
+      Object.keys(state).forEach(key => {
+        if (
+          (!state[key as keyof FormState] && key !== 'eatingTime') ||
+          (key === 'eatingTime' && state.eatingTime < 0)
+        ) {
+          return reject('Compila tutti i campi prima di procedere');
+        }
+      });
+      resolve();
+    });
+
   const handleSubmit = () => {
-    console.log('submit');
+    validateForm()
+      .then(() => {
+        props.onSubmit({...state});
+        dispatch({type: ActionTypes.resetForm, payload: initialFormState});
+      })
+      .catch((err: any) => {
+        Alert.alert('Attenzione', err, [{style: 'cancel'}]);
+        console.log(err);
+      });
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <SectionTitle text="Pills name" subSection={true} />
       <InputText
         icon={icons.pills}
@@ -89,20 +113,31 @@ function PlanForm() {
           />
         ))}
       </View>
+      <View>
+        <SectionTitle
+          style={styles.sectionSpace}
+          text="Notification"
+          subSection={true}
+        />
+        <TimePicker
+          onChange={(date: Date) =>
+            handleChangeInput(ActionTypes.setNotification, date)
+          }
+          formatDisplayText={amPmFormatter}
+        />
+      </View>
 
       <View>
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={[textStyle.text, {color: colors.white}]}>Done</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 150,
-  },
+  container: {},
   flex: {
     display: 'flex',
     justifyContent: 'space-between',

@@ -7,9 +7,8 @@ import Arrow from '@assets/img/right-arrow.svg';
 type Props = {
   text: string;
   time: string;
-  eatingInfo: string;
 };
-function PlansListItem({text, time, eatingInfo}: Props) {
+function PlansListItem({text, time}: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.itemsContainer}>

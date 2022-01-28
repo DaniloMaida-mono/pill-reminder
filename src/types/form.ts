@@ -5,6 +5,7 @@ export type FormState = {
   qty?: number;
   days?: number;
   eatingTime: number;
+  notification: Date;
 };
 
 export enum ActionTypes {
@@ -12,6 +13,8 @@ export enum ActionTypes {
   setPillsQuantity = 'SET_PILLS_QUANTITY',
   setPillsDay = 'SET_PILLS_DAYS',
   setPillsEatingTime = 'SET_PILLS_EATING_TIME',
+  setNotification = 'SET_NOTIFICATION',
+  resetForm = 'RESET_FORM',
 }
 
 export interface FormAction {
