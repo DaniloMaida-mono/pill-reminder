@@ -2,13 +2,13 @@ import {RootStackParamList} from '@app/navigation';
 import {ApplicationState} from '@app/types/store';
 import withApplicationState from '@app/withApplicationState';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
 import PlansList from '../PlansList';
-
-import SearchInput from '../SearchInput';
+import SearchIcon from '@assets/img/search-icon.svg';
 import SectionTitle from '../SectionTitle';
+import InputText from '../TextInput';
 
 type Props = {
   state: ApplicationState;
@@ -16,33 +16,50 @@ type Props = {
 };
 function Home(props: Props) {
   const [searchValue, setSearchValue] = useState('');
-
+  const [plans, setPlans] = useState([...props.state.plans]);
+  const searchIcon = (
+    <SearchIcon style={styles.searchIcon} width={15} fill="#000" />
+  );
   const handlePress = (id: string) => {
     props.navigation.navigate('Edit', {
       id: id,
     });
   };
-  return (
-    <ScrollView style={styles.container}>
-      <SearchInput
-        value={searchValue}
-        placeHolder="Search"
-        onChange={(v: string) => setSearchValue(v)}
-      />
 
-      <View style={styles.sectionContainer}>
-        <SectionTitle
-          text="Hello,"
-          isWithSecondary={true}
-          secondaryText="Danilo"
+  useEffect(() => {
+    const allPlans = [...props.state.plans];
+    const results = allPlans.filter(plan =>
+      plan.name.toLowerCase().includes(searchValue)
+    );
+    setPlans(results);
+  }, [props.state.plans, searchValue]);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <InputText
+          value={searchValue}
+          placeholder="Search"
+          onChangeText={(v: string) => setSearchValue(v)}
+          icon={searchIcon}
         />
-        <PlanBox total={4} completed={1} />
       </View>
-      <View style={styles.sectionContainer}>
-        <SectionTitle text="Daily review" subSection={true} />
-        <PlansList data={props.state.plans} onPress={handlePress} />
-      </View>
-    </ScrollView>
+
+      <ScrollView style={styles.container}>
+        <View style={styles.sectionContainer}>
+          <SectionTitle
+            text="Hello,"
+            isWithSecondary={true}
+            secondaryText="Danilo"
+          />
+          <PlanBox total={4} completed={1} />
+        </View>
+        <View style={[styles.sectionContainer, styles.container]}>
+          <SectionTitle text="Daily review" subSection={true} />
+          <PlansList data={plans} onPress={handlePress} />
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -53,6 +70,12 @@ const styles = StyleSheet.create({
   },
   sectionContainer: {
     paddingTop: 30,
+  },
+  searchContainer: {
+    paddingBottom: 20,
+  },
+  searchIcon: {
+    padding: 10,
   },
 });
 

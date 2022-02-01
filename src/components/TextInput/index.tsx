@@ -18,8 +18,10 @@ type Props = {
   value?: string;
   keyboardType?: KeyboardTypeOptions;
   onChangeText?: (text: string) => void;
+  onSubmitEditing?: () => void;
   onFocus?: () => void;
   editable?: boolean;
+  placeholder?: string;
 };
 
 const InputText: React.FC<Props> = props => {
