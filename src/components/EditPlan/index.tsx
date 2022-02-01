@@ -1,29 +1,32 @@
 import {RootStackParamList} from '@app/navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
-import {Alert, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import BackIcon from '@assets/img/back.svg';
 import {colors} from '@app/theme/colors';
 import SectionTitle from '../SectionTitle';
 import PlanForm from '../PlanForm';
 import withApplicationState from '@app/withApplicationState';
 import {FormState} from '@app/types/form';
-import {PlansActionTypes} from '@app/types/store';
+import {ApplicationState, PlansActionTypes} from '@app/types/store';
 import {showMessage} from 'react-native-flash-message';
-import {idGenerator} from '@app/utils/idGenerator';
+import {RouteProp} from '@react-navigation/native';
 
 type Props = {
+  state: ApplicationState;
   dispatch: ({type}: {type: string; payload?: any}) => void;
-  navigation: NativeStackScreenProps<RootStackParamList, 'Plan'>['navigation'];
+  navigation: NativeStackScreenProps<RootStackParamList, 'Edit'>['navigation'];
+  route: RouteProp<RootStackParamList, 'Edit'>;
 };
-function Plan(props: Props) {
-  const handleSubmit = (data: Omit<FormState, 'id'>) => {
-    const dataWithId: FormState = {...data, id: idGenerator()};
+function EditPlan(props: Props) {
+  const [id] = useState(props.route.params.id);
 
-    props.dispatch({type: PlansActionTypes.addPlan, payload: dataWithId});
+  const plan = props.state.plans.filter(el => el.id === id)[0];
+  const handleSubmit = (data: FormState) => {
+    props.dispatch({type: PlansActionTypes.editPlan, payload: {id, data}});
     props.navigation.navigate('Home');
     showMessage({
-      message: 'Piano creato correttamente!',
+      message: 'Piano modifcato correttamente!',
       type: 'success',
     });
   };
@@ -34,8 +37,8 @@ function Plan(props: Props) {
         onPress={() => props.navigation.navigate('Home')}>
         <BackIcon fill={colors.darkerGrey} height={30} width={30} />
       </TouchableOpacity>
-      <SectionTitle text="Add Plan" />
-      <PlanForm onSubmit={handleSubmit} />
+      <SectionTitle text="Edit Plan" />
+      <PlanForm onSubmit={handleSubmit} formState={plan} />
     </ScrollView>
   );
 }
@@ -53,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withApplicationState(Plan);
+export default withApplicationState(EditPlan);

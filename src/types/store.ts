@@ -11,4 +11,5 @@ export interface StateAction {
 
 export enum PlansActionTypes {
   addPlan = 'ADD_PLAN',
+  editPlan = 'EDIT_PLAN',
 }

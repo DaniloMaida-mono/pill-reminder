@@ -14,7 +14,7 @@ function PlansList({onPress, data}: Props) {
       {data.map((item, index) => (
         <TouchableOpacity
           key={index}
-          onPress={() => onPress(index)}
+          onPress={() => onPress(item.id)}
           style={styles.item}>
           <PlansListItem
             text={item.name}

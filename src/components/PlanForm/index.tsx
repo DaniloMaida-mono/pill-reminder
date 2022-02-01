@@ -17,6 +17,7 @@ import {amPmFormatter} from '@app/utils/dateFormatter';
 
 interface Props {
   onSubmit: (state: FormState) => void;
+  formState?: FormState;
 }
 
 function PlanForm(props: Props) {
@@ -25,7 +26,10 @@ function PlanForm(props: Props) {
     calendar: <CalendarIcon width={20} height={20} fill={colors.darkerGrey} />,
   };
 
-  const [state, dispatch] = useReducer(reducer, initialFormState);
+  const [state, dispatch] = useReducer(
+    reducer,
+    props.formState || initialFormState
+  );
   const handleFoodChange = (value: number) => {
     dispatch({type: ActionTypes.setPillsEatingTime, payload: value});
   };
@@ -124,6 +128,7 @@ function PlanForm(props: Props) {
             handleChangeInput(ActionTypes.setNotification, date)
           }
           formatDisplayText={amPmFormatter}
+          value={state.notification}
         />
       </View>
 

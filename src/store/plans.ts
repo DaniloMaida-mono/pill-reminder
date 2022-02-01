@@ -9,6 +9,11 @@ export const plansReducer = (
     case PlansActionTypes.addPlan: {
       return [...state, action.payload];
     }
+    case PlansActionTypes.editPlan: {
+      const {id, data} = action.payload;
+      let plan = state.find(el => el.id === id);
+      return plan ? [...state.filter(el => el.id !== id), data] : [...state];
+    }
     default:
       return state;
   }

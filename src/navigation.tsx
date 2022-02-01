@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 
 import {
   BottomTabNavigationOptions,
@@ -15,12 +15,15 @@ import Demo from './components/Demo';
 import Home from './components/Home';
 import {colors} from './theme/colors';
 import Plan from './components/Plan';
+import {MainStackNavigator} from './stackNavigator';
+import {FormState} from './types/form';
 
 export type RootStackParamList = {
   Plan: undefined;
   Home: undefined;
+  Edit: {id: FormState['id']};
 };
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 const customTabBarStyle: BottomTabNavigationOptions = {
   tabBarActiveTintColor: colors.green,
   tabBarInactiveTintColor: colors.darkerGrey,
@@ -34,18 +37,21 @@ const customTabBarStyle: BottomTabNavigationOptions = {
   },
   tabBarHideOnKeyboard: true,
 };
+
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
+};
 const Navigation = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={customTabBarStyle}
-        sceneContainerStyle={{
-          backgroundColor: colors.white,
-        }}>
+    <NavigationContainer theme={navTheme}>
+      <Tab.Navigator initialRouteName="Stack" screenOptions={customTabBarStyle}>
         <Tab.Screen
-          name="Home"
-          component={Home}
+          name="Stack"
+          component={MainStackNavigator}
           options={{
             tabBarIcon: ({size, color}) => (
               <Gallery width={size} height={size} fill={color} />

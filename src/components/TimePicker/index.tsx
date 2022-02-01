@@ -8,9 +8,10 @@ import {colors} from '@app/theme/colors';
 type Props = {
   onChange: (date: Date) => void;
   formatDisplayText?: Function;
+  value?: Date;
 };
 const TimePicker = (props: Props) => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(props.value || new Date());
   const [show, setShow] = useState(false);
 
   const [text, setText] = useState(

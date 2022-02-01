@@ -1,5 +1,7 @@
+import {RootStackParamList} from '@app/navigation';
 import {ApplicationState} from '@app/types/store';
 import withApplicationState from '@app/withApplicationState';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import PlanBox from '../PlanBox';
@@ -10,12 +12,15 @@ import SectionTitle from '../SectionTitle';
 
 type Props = {
   state: ApplicationState;
+  navigation: NativeStackScreenProps<RootStackParamList, 'Home'>['navigation'];
 };
 function Home(props: Props) {
   const [searchValue, setSearchValue] = useState('');
 
-  const handlePress = (id: string | number) => {
-    console.log(id);
+  const handlePress = (id: string) => {
+    props.navigation.navigate('Edit', {
+      id: id,
+    });
   };
   return (
     <ScrollView style={styles.container}>
