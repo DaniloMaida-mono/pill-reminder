@@ -31,11 +31,14 @@ function EditPlan(props: Props) {
       message: 'Piano modifcato correttamente!',
       type: 'success',
     });
-    onCreateTriggerNotification(
-      data,
-      'pills-notification',
-      RepeatFrequency.DAILY
-    );
+
+    if (plan.notification.getTime() !== data.notification.getTime()) {
+      onCreateTriggerNotification(
+        data,
+        'pills-notification',
+        RepeatFrequency.DAILY
+      );
+    }
   };
   return (
     <ScrollView style={styles.container}>

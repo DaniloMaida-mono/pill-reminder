@@ -2,11 +2,7 @@ import {RootStackParamList} from '@app/navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {Alert, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import notifee, {
-  RepeatFrequency,
-  TimestampTrigger,
-  TriggerType,
-} from '@notifee/react-native';
+import {RepeatFrequency} from '@notifee/react-native';
 
 import BackIcon from '@assets/img/back.svg';
 import {colors} from '@app/theme/colors';
