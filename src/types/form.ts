@@ -6,7 +6,7 @@ export type FormState = {
   days?: number;
   eatingTime: number;
   notification: Date;
-  id: string;
+  id?: string;
 };
 
 export enum ActionTypes {

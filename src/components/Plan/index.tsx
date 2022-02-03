@@ -2,6 +2,12 @@ import {RootStackParamList} from '@app/navigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {Alert, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import notifee, {
+  RepeatFrequency,
+  TimestampTrigger,
+  TriggerType,
+} from '@notifee/react-native';
+
 import BackIcon from '@assets/img/back.svg';
 import {colors} from '@app/theme/colors';
 import SectionTitle from '../SectionTitle';
@@ -11,6 +17,7 @@ import {FormState} from '@app/types/form';
 import {PlansActionTypes} from '@app/types/store';
 import {showMessage} from 'react-native-flash-message';
 import {idGenerator} from '@app/utils/idGenerator';
+import {onCreateTriggerNotification} from '@app/utils/notification';
 
 type Props = {
   dispatch: ({type}: {type: string; payload?: any}) => void;
@@ -26,7 +33,14 @@ function Plan(props: Props) {
       message: 'Piano creato correttamente!',
       type: 'success',
     });
+
+    onCreateTriggerNotification(
+      dataWithId,
+      'pills-notification',
+      RepeatFrequency.DAILY
+    );
   };
+
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity

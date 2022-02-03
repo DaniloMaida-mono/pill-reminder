@@ -11,6 +11,8 @@ import {FormState} from '@app/types/form';
 import {ApplicationState, PlansActionTypes} from '@app/types/store';
 import {showMessage} from 'react-native-flash-message';
 import {RouteProp} from '@react-navigation/native';
+import {onCreateTriggerNotification} from '@app/utils/notification';
+import {RepeatFrequency} from '@notifee/react-native';
 
 type Props = {
   state: ApplicationState;
@@ -29,6 +31,11 @@ function EditPlan(props: Props) {
       message: 'Piano modifcato correttamente!',
       type: 'success',
     });
+    onCreateTriggerNotification(
+      data,
+      'pills-notification',
+      RepeatFrequency.DAILY
+    );
   };
   return (
     <ScrollView style={styles.container}>

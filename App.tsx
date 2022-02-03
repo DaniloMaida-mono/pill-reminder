@@ -24,7 +24,6 @@ import {
   useColorScheme,
 } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 

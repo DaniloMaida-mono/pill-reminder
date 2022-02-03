@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {View, Platform, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import {View, TouchableOpacity} from 'react-native';
+import {TimePickerModal} from 'react-native-paper-dates';
 import BellIcon from '@assets/img/bell.svg';
 import InputText from '../TextInput';
 import {colors} from '@app/theme/colors';
-
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 type Props = {
   onChange: (date: Date) => void;
   formatDisplayText?: Function;
@@ -17,17 +18,21 @@ const TimePicker = (props: Props) => {
   const [text, setText] = useState(
     props.formatDisplayText ? props.formatDisplayText(date) : ''
   );
-  const onChange = (event: Event, selectedDate?: Date) => {
-    const currentDate = selectedDate || date;
+  const onChange = React.useCallback(
+    ({hours, minutes}) => {
+      setShow(false);
+      const time = new Date();
+      time.setHours(hours);
+      time.setMinutes(minutes);
 
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-
-    if (props.formatDisplayText) {
-      setText(props.formatDisplayText(currentDate));
-    }
-    props.onChange(currentDate);
-  };
+      setDate(time);
+      if (props.formatDisplayText) {
+        setText(props.formatDisplayText(time));
+      }
+      props.onChange(time);
+    },
+    [props]
+  );
 
   const showTimepicker = () => {
     setShow(true);
@@ -47,12 +52,17 @@ const TimePicker = (props: Props) => {
         </TouchableOpacity>
       </View>
       {show && (
-        <DateTimePicker
-          value={date}
-          mode="time"
-          is24Hour={false}
-          display="default"
-          onChange={onChange}
+        <TimePickerModal
+          visible={show}
+          onDismiss={() => setShow(false)}
+          onConfirm={onChange}
+          hours={date.getHours()} // default: current hours
+          minutes={date.getMinutes()} // default: current minutes
+          label="Select time" // optional, default 'Select time'
+          uppercase={false} // optional, default is true
+          cancelLabel="Cancel" // optional, default: 'Cancel'
+          confirmLabel="Ok" // optional, default: 'Ok'
+          animationType="fade" // optional, default is 'none'
         />
       )}
     </View>
